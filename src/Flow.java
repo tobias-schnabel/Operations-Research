@@ -2,16 +2,18 @@ import java.util.LinkedList;
 
 public class Flow {
     final Graph graph;
-    private final int[][] matrix;
+    private final int[][] network;
+    private final int[][] residualNetwork;
 
     public Flow(Graph inputGraph) {
         this.graph = inputGraph;
-        this.matrix = this.graph.getMatrix();
+        this.network = this.graph.getMatrix();
         int V = this.graph.getNumVertices();
+        this.residualNetwork = this.graph.getResid();
     }
 
     //method to check whether there exists a directed path from s to t
-    boolean findPath(int source, int sink, int[][] residGraph, int[] parent){
+    boolean findPath(int source, int sink, int[] parent){
         //init
         int V = graph.getNumVertices();
         boolean[] visited = new boolean[V];
@@ -26,7 +28,7 @@ public class Flow {
             int u = q.poll();
 
             for (int v = 0; v < V; v++) {
-                if (!visited[v] && residGraph[u][v] > 0) {
+                if (!visited[v] && this.residualNetwork[u][v] > 0) {
 
                     if (v == sink) { //source and sink connected, set parent and ret true
                         parent[v] = u;
@@ -43,23 +45,33 @@ public class Flow {
         return false; //sink not reachable
     } //close method
 
+
+
     int augmentingPath(int source, int sink){
         int V = graph.getNumVertices();
         int[][] residGraph = new int[V][V];
 
         //make residual graph
-        for (int u = 0; u < V; u++) System.arraycopy(this.matrix[u], 0, residGraph[u], 0, V);
+        for (int u = 0; u < V; u++) System.arraycopy(this.network[u], 0, this.residualNetwork[u], 0, V);
 
         int[] parent = new int[V]; //array to store the path
 
         int maxFlow = 0; //init
         int u, v; //loop indices
 
-        while(this.findPath(1, 5, residGraph, parent)){ //while a path exists
+        while(this.findPath(1, 5, parent)){ //while a path exists
             int path_flow = Integer.MAX_VALUE;
             for (v = sink; v != source; v = parent[v]) {
                 u = parent[v];
                 path_flow = Math.min(path_flow, residGraph[u][v]);
+
+                //keep track of flow in arc list
+                for (Arc arc : graph.arcList) {
+                    if (arc.getOrigin() == u && arc.getDestination() == v){
+                        arc.setFlow(path_flow);
+                        break;
+                    }
+                }
             }
 
             // update residual capacities of the edges and reverse edges along the path
@@ -71,6 +83,9 @@ public class Flow {
 
             // Add path flow to overall flow
             maxFlow += path_flow;
+
+
+
         } //close while
 
         // Return highest flow found

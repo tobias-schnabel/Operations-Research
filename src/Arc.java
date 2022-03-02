@@ -3,6 +3,7 @@ public class Arc {
     private int origin;
     private int destination;
     private int weight;
+    private int flow;
 
     public Arc(int origin, int destination, int weight) {
         this.origin = origin;
@@ -34,12 +35,18 @@ public class Arc {
         this.weight = weight;
     }
 
+    public void setFlow(int flow) {
+        this.flow = flow;
+    }
+
+
     @Override
     public String toString() {
         return "Edge{" +
                 "from " + origin +
                 ", to " + destination +
-                " with weight of" + weight +
+                " with flow " + flow +
+                " / " + weight +
                 '}';
     }
 }

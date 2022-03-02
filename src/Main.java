@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         //initialize
         ArrayList<Arc> arcs = new ArrayList<>();
-        int NumberOfNodes;
+        int NumberOfNodes = -1;
 
         String filename = "P5 test instances/P5_5_7.txt";
 
@@ -22,6 +22,23 @@ public class Main {
         catch (FileNotFoundException e){
             e.printStackTrace();
         }
+
+        Graph graph = new Graph(NumberOfNodes, arcs);
+        graph.init();
+
+        Flow maxFlow = new Flow(graph);
+
+        int result;
+        int[] parent = new int[NumberOfNodes]; //array to store the path
+
+        boolean feasible = maxFlow.findPath(1, NumberOfNodes, parent);
+        if (feasible) {
+            result = maxFlow.augmentingPath(1, NumberOfNodes);
+            System.out.println(result);
+        }
+
+        result = maxFlow.augmentingPath(1, NumberOfNodes);
+        System.out.println(result);
 
     } //close main
 
