@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -6,13 +7,17 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
+        //initialize
+        ArrayList<Arc> arcs = new ArrayList<>();
+        int NumberOfNodes;
 
         String filename = "P5 test instances/P5_5_7.txt";
 
         try{
-            //edges = readEdgeList(filename);
-            System.out.println("Edges list has been read.");
-
+            arcs = readArcList(filename);
+            System.out.println("Arc list read succesfully.");
+            NumberOfNodes = getNumNodes(filename);
+            System.out.println("The graph has "+ NumberOfNodes + " Nodes.");
         }
         catch (FileNotFoundException e){
             e.printStackTrace();
@@ -21,37 +26,43 @@ public class Main {
     } //close main
 
 
-//    public static ArrayList<ArrayList<Edge>> readEdgeList(String filename)
-//
-//            throws java.io.FileNotFoundException{
-//        File file = new File(filename);
-//        Scanner input = new Scanner (file);
-//        int v = input.nextInt();
-//        int e = input.nextInt();
-//
-//        ArrayList<ArrayList<Edge>> startEdges = new ArrayList<>();
-//
-//        for(int i = 0; i < v; i++){
-//            ArrayList<Edge> endEdges = new ArrayList<>();
-//            startEdges.add(endEdges);
-//        }
-//
-//        for(int i = 0; i < e; i++){
-//            ArrayList<Edge> endEdges = new ArrayList<>();
-//
-//            int from = input.nextInt();
-//            int whereTo = input.nextInt();
-//            int weight = input.nextInt();
-//
-//           // Edge edge = new Edge(whereTo, weight);
-//            endEdges = startEdges.get(from - 1);
-//            endEdges.add(edge);
-//            startEdges.set((from - 1), endEdges);
-//
-//        }
-//
-//        input.close();
-//
-//        return startEdges;
-//    }
-} //close class
+    public static ArrayList<Arc> readArcList(String filename)
+
+        throws java.io.FileNotFoundException{
+        File file = new File(filename);
+        Scanner scanner = new Scanner(file);
+        //get top line
+        int numNodes = scanner.nextInt();
+        int numArcs = scanner.nextInt();
+        //declare list
+        ArrayList<Arc> arcList = new ArrayList<>();
+
+        for (int i = 0; i < numArcs; i++) {
+            int origin = scanner.nextInt();
+            int destination = scanner.nextInt();
+            int weight = scanner.nextInt();
+            Arc newArc = new Arc(origin, destination, weight);
+            arcList.add(newArc);
+        }
+
+        scanner.close();
+
+        return arcList;
+    } //close exception
+
+
+
+    public static int getNumNodes(String filename)
+
+            throws java.io.FileNotFoundException{
+            File file = new File(filename);
+            Scanner scanner = new Scanner(file);
+            //get top line
+            int numNodes = scanner.nextInt();
+
+            scanner.close();
+
+            return numNodes;
+        } //close exception
+
+    } //close class

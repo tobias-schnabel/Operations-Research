@@ -1,10 +1,10 @@
-public class Edge {
+public class Arc {
 
     private int origin;
     private int destination;
     private int weight;
 
-    public Edge(int origin, int destination, int weight) {
+    public Arc(int origin, int destination, int weight) {
         this.origin = origin;
         this.destination = destination;
         this.weight = weight;
