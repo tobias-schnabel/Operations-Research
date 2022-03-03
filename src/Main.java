@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -9,39 +8,65 @@ public class Main {
     public static void main(String[] args) {
         //initialize
         ArrayList<Arc> arcs = new ArrayList<>();
-        int NumberOfNodes = -1;
+        int numNodes = -1;
 
-        String filename = "P5 test instances/P5_5_7.txt";
+        String filename = "P5 test instances/TEST.txt";
 
         try{
             arcs = readArcList(filename);
             System.out.println("Arc list read succesfully.");
-            NumberOfNodes = getNumNodes(filename);
-            System.out.println("The graph has "+ NumberOfNodes + " Nodes.");
+            numNodes = getNumNodes(filename);
+            System.out.println("The graph has "+ numNodes + " Nodes.");
         }
         catch (FileNotFoundException e){
             e.printStackTrace();
         }
 
-        Graph graph = new Graph(NumberOfNodes, arcs);
-        graph.init();
+        Graph graph = new Graph(numNodes, arcs);
+        graph.printMatrix(graph.asMatrix());
 
-        Flow maxFlow = new Flow(graph);
+        Flow flow = new Flow(numNodes, graph.asMatrix());
+        flow.solve();
 
-        int result;
-        int[] parent = new int[NumberOfNodes]; //array to store the path
 
-        boolean feasible = maxFlow.findPath(1, NumberOfNodes, parent);
-        if (feasible) {
-            result = maxFlow.augmentingPath(1, NumberOfNodes);
-            System.out.println(result);
-        }
 
-        result = maxFlow.augmentingPath(1, NumberOfNodes);
-        System.out.println(result);
+
 
     } //close main
 
+//    public static void test(){
+//        ArrayList<Arc> arcs = new ArrayList<>();
+//        int numNodes = -1;
+//
+//        String[] testList = {"P5 test instances/P5_5_7.txt", "P5 test instances/P5_6_9.txt", "P5 test instances/P5_7_11.txt", "P5 test instances/P5_11_18.txt", "P5 test instances/P5_12_21.txt", "P5 test instances/P5_96_187.txt", "P5 test instances/P5_96_528.txt", "P5 test instances/P5_160_285.txt", "P5 test instances/P5_160_912.txt", "P5 test instances/P5_200_483.txt"};
+//        for (String test : testList){
+//            String filename = test;
+//
+//            try{
+//                arcs = readArcList(filename);
+//                System.out.println("Arc list read succesfully.");
+//                numNodes = getNumNodes(filename);
+//                System.out.println("The graph has "+ numNodes + " Nodes.");
+//            }
+//            catch (FileNotFoundException e){
+//                e.printStackTrace();
+//            }
+//
+//            Graph_OLD testGraph = new Graph_OLD(numNodes, arcs);
+//            testGraph.init();
+//
+//            Flow maxFlowTest = new Flow(testGraph);
+//
+//            int testResult;
+//            int[] parentTest = new int[numNodes]; //array to store the path
+//
+//            int sourceTest = 0;
+//            int sinkTest = numNodes - 1;
+//
+//            boolean feasibleTest = maxFlowTest.findPath(source, sink, parent);
+//            System.out.println(feasibleTest);
+//        }
+//    }
 
     public static ArrayList<Arc> readArcList(String filename)
 

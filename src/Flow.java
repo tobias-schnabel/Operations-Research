@@ -1,96 +1,114 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Flow {
-    final Graph graph;
-    private final int[][] network;
-    private final int[][] residualNetwork;
+    private final int V; //number of Vertices
+    private final int source;
+    private final int sink;
+    private final int[][] graph;
+    private int[] predecessor;
+    private int max_flow;
 
-    public Flow(Graph inputGraph) {
-        this.graph = inputGraph;
-        this.network = this.graph.getMatrix();
-        int V = this.graph.getNumVertices();
-        this.residualNetwork = this.graph.getResid();
+    public Flow(int numVert, int[][] graph) {
+        V = numVert;
+        this.source = 0;
+        this.sink = V -1;
+        this.graph = graph;
+        this.predecessor = new int[V];
+        this.max_flow = 0;
     }
 
-    //method to check whether there exists a directed path from s to t
-    boolean findPath(int source, int sink, int[] parent){
-        //init
-        int V = graph.getNumVertices();
-        boolean[] visited = new boolean[V];
-        // Create a queue, enqueue source vertex and mark source vertex as visited
-        LinkedList<Integer> q = new LinkedList<>();
-        q.add(source);
-        visited[source] = true;
-        parent[source] = -1;
+    public void solve(){
+        this.max_flow = augmentingPath();
+        System.out.println(this);
+    }
 
-        // Breadth-first search loop
-        while (! q.isEmpty()) {
-            int u = q.poll();
+    @Override
+    public String toString() {
+        return "Flow{" +
+                "from " + source +
+                " to " + sink +
+                " via " + Arrays.toString(predecessor) +
+                " has value of " + max_flow +
+                '}';
+    }
 
-            for (int v = 0; v < V; v++) {
-                if (!visited[v] && this.residualNetwork[u][v] > 0) {
+    int augmentingPath() {
 
-                    if (v == sink) { //source and sink connected, set parent and ret true
-                        parent[v] = u;
-                        return true;
-                    }
+        int u,v;
+        int max_flow = 0;       
+        int[][] resid = this.makeResidGraph(); //init
+        
+        int[] predecessor = new int[this.V]; //to keep track of path taken
 
-                    q.add(v);
-                    parent[v] = u;
-                    visited[v] = true;
-                }
-            } //close for
-        }
-
-        return false; //sink not reachable
-    } //close method
-
-
-
-    int augmentingPath(int source, int sink){
-        int V = graph.getNumVertices();
-        int[][] residGraph = new int[V][V];
-
-        //make residual graph
-        for (int u = 0; u < V; u++) System.arraycopy(this.network[u], 0, this.residualNetwork[u], 0, V);
-
-        int[] parent = new int[V]; //array to store the path
-
-        int maxFlow = 0; //init
-        int u, v; //loop indices
-
-        while(this.findPath(1, 5, parent)){ //while a path exists
-            int path_flow = Integer.MAX_VALUE;
-            for (v = sink; v != source; v = parent[v]) {
-                u = parent[v];
-                path_flow = Math.min(path_flow, residGraph[u][v]);
-
-                //keep track of flow in arc list
-                for (Arc arc : graph.arcList) {
-                    if (arc.getOrigin() == u && arc.getDestination() == v){
-                        arc.setFlow(path_flow);
-                        break;
-                    }
-                }
+        while(isPath(resid, predecessor)) {
+            int path_flow = Integer.MAX_VALUE; //init
+            for(v = sink; v != source; v= predecessor[v]){
+                u = predecessor[v];
+                path_flow = Math.min(path_flow, resid[u][v]); //recursion
             }
 
-            // update residual capacities of the edges and reverse edges along the path
-            for (v = sink; v != source; v = parent[v]) {
-                u = parent[v];
-                residGraph[u][v] -= path_flow;
-                residGraph[v][u] += path_flow;
-            } //close for
+            for(v = sink; v != source; v= predecessor[v]){
+                u = predecessor[v];
+                resid[u][v] -= path_flow; //adjust forward arc
+                resid[v][u] += path_flow; //adjust backward arc
+            }
 
-            // Add path flow to overall flow
-            maxFlow += path_flow;
-
-
-
-        } //close while
-
-        // Return highest flow found
-        return maxFlow;
+            max_flow += path_flow;
+        }
+        return max_flow;
     }
+
+    int[][] makeResidGraph(){
+        int u,v;
+        int[][] residGraph = new int[V][V];
+
+        for (u = 0; u < V; u++)
+            for (v = 0; v < V; v++)
+                residGraph[u][v] = this.graph[u][v];
+        
+        return residGraph;
+    }
+    
+    boolean isPath(int[][] residGraph, int[] predecessor) {
+        boolean[] visited = new boolean[V]; // Create a visited array (all vertices not visited so false)
+
+        // Create a queue, enqueue source vertex and mark
+        // source vertex as visited
+        LinkedList<Integer> queue = new LinkedList<>(); // Create a queue
+        queue.add(0); //enqueue source vertex
+        visited[0] = true; //mark source vertex as visited
+        predecessor[0] = -1; //no node before the source
+
+        // Standard BFS Loop (see geeksforgeeks)
+        while (queue.size() != 0) {
+            int u = queue.poll();
+
+            for (int v = 0; v < V; v++) {
+                if (!visited[v] && residGraph[u][v] > 0) {
+                    /*
+                     If we find a connection to the sink
+                     node, then there is no point in BFS
+                     anymore We just have to set its predecessor
+                     and can return true
+                    */
+                    if (v == sink) {
+                        predecessor[v] = u;
+                        return true;
+                    }
+                    queue.add(v);
+                    predecessor[v] = u;
+                    visited[v] = true;
+                }
+            }
+        }
+
+        // We didn't reach sink in BFS starting from source,
+        // so return false
+        return false;
+    }
+
+
 
 
 } //close class
