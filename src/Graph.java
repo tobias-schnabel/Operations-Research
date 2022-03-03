@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Graph {
     private final int numVertices;
-    private ArrayList<Arc> arcList;
+    private final ArrayList<Arc> arcList;
 
 
     public Graph(int numVertices, ArrayList<Arc> arcList) {

@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Flow {
     private final int V; //number of Vertices
-    private final int source;
-    private final int sink;
+    private int source;
+    private int sink;
     private final int[][] graph;
     private int max_flow;
     private final int[][] flows;
@@ -15,13 +14,23 @@ public class Flow {
         this.source = 0;
         this.sink = V -1;
         this.graph = graph;
-        int[] predecessor = new int[V];
         this.max_flow = 0;
         this.flows = new int[V][V];
     }
 
     public void solve(ArrayList<Arc> arcList){
         this.max_flow = maxFlow();
+
+        source += 1;
+        sink += 1;
+
+        System.out.println(this);
+        this.relayFlows(arcList);
+    }
+
+    public void solveExtensive(ArrayList<Arc> arcList){
+        this.max_flow = maxFlow();
+        System.out.println("Individual Arc flows:");
         System.out.println(this);
 
         printMatrix(augmentingPath());
@@ -37,8 +46,8 @@ public class Flow {
                 " .";
     }
 
+
     public void relayFlows(ArrayList<Arc> arcs){
-        int[][] finalValues = this.flows;
         int i,j;
 
         for (i = 0; i < this.V; i++){
@@ -50,13 +59,12 @@ public class Flow {
                 }
             }
         }
-        System.out.println("Individual Arc flows:");
+
     }
 
     int[][] augmentingPath() {
 
         int u,v;
-        int max_flow = 0;
         int[][] resid = this.makeResidGraph(); //init
 
         int[] predecessor = new int[this.V]; //to keep track of path taken
@@ -157,7 +165,7 @@ public class Flow {
     }
 
     public void printMatrix(int[][] matrix){
-        System.out.println("Final Graph: \n");
+        System.out.println("Final Graph:");
         for (int i = 0; i < this.V; i++) {
             int lineBreakCounter = 0;
             for (int j = 0; j < this.V; j++) {

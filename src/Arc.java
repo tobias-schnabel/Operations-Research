@@ -2,7 +2,7 @@ public class Arc {
 
     private int origin;
     private int destination;
-    private int weight;
+    private final int weight;
     private int flow;
 
     public Arc(int origin, int destination, int weight) {
@@ -29,10 +29,6 @@ public class Arc {
 
     public void setDestination(int destination) {
         this.destination = destination;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     public void setFlow(int flow) {
