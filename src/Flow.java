@@ -8,6 +8,7 @@ public class Flow {
     private final int[][] graph;
     private int[] predecessor;
     private int max_flow;
+    private int[][] flows;
 
     public Flow(int numVert, int[][] graph) {
         V = numVert;
@@ -16,24 +17,58 @@ public class Flow {
         this.graph = graph;
         this.predecessor = new int[V];
         this.max_flow = 0;
+        this.flows = new int[V][V];
     }
 
     public void solve(){
-        this.max_flow = augmentingPath();
+        this.max_flow = maxFlow();
         System.out.println(this);
+
+        printResid(augmentingPath());
+        printResid(this.flows);
     }
 
     @Override
     public String toString() {
-        return "Flow{" +
+        return "Flow " +
                 "from " + source +
                 " to " + sink +
                 " via " + Arrays.toString(predecessor) +
                 " has value of " + max_flow +
-                '}';
+                " .";
     }
 
-    int augmentingPath() {
+
+
+    int[][] augmentingPath() {
+
+        int u,v;
+        int max_flow = 0;
+        int[][] resid = this.makeResidGraph(); //init
+
+        int[] predecessor = new int[this.V]; //to keep track of path taken
+
+        while(isPath(resid, predecessor)) {
+            int path_flow = Integer.MAX_VALUE; //init
+            for(v = sink; v != source; v= predecessor[v]){
+                u = predecessor[v];
+                path_flow = Math.min(path_flow, resid[u][v]); //recursion
+            }
+
+            for(v = sink; v != source; v= predecessor[v]){
+                u = predecessor[v];
+                resid[u][v] -= path_flow; //adjust forward arc
+                this.flows[u][v] -= path_flow;
+                resid[v][u] += path_flow; //adjust backward arc
+                this.flows[v][u] += path_flow;
+            }
+
+            max_flow += path_flow;
+        }
+        return this.flows;
+    }
+
+    int maxFlow() {
 
         int u,v;
         int max_flow = 0;       
@@ -107,6 +142,21 @@ public class Flow {
         // so return false
         return false;
     }
+
+    public void printResid(int[][] matrix){
+        for (int i = 0; i < this.V; i++) {
+            int lineBreakCounter = 0;
+            for (int j = 0; j < this.V; j++) {
+                System.out.print(matrix[i][j] + " ");
+                lineBreakCounter ++;
+                if (lineBreakCounter == this.V) {
+                    System.out.print("\n");
+                    lineBreakCounter = 0;
+                }
+            } //inner for
+        } // outer for
+        System.out.print("\n");
+    } //close method
 
 
 
