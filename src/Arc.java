@@ -42,11 +42,11 @@ public class Arc {
 
     @Override
     public String toString() {
-        return "Edge{" +
+        return "Arc " +
                 "from " + origin +
-                ", to " + destination +
+                " to " + destination +
                 " with flow " + flow +
                 " / " + weight +
-                '}';
+                " .";
     }
 }

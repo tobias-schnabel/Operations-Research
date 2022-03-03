@@ -26,8 +26,8 @@ public class Main {
         graph.printMatrix(graph.asMatrix());
 
         Flow flow = new Flow(numNodes, graph.asMatrix());
-        flow.solve();
-
+        flow.solve(arcs);
+        printArcList(arcs);
 
 
 
@@ -67,6 +67,12 @@ public class Main {
 //            System.out.println(feasibleTest);
 //        }
 //    }
+
+    public static void printArcList(ArrayList<Arc> arcList) {
+        for (Arc arc : arcList) {
+            System.out.println(arc);
+        }
+    }
 
     public static ArrayList<Arc> readArcList(String filename)
 

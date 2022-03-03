@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -6,26 +7,25 @@ public class Flow {
     private final int source;
     private final int sink;
     private final int[][] graph;
-    private int[] predecessor;
     private int max_flow;
-    private int[][] flows;
+    private final int[][] flows;
 
     public Flow(int numVert, int[][] graph) {
         V = numVert;
         this.source = 0;
         this.sink = V -1;
         this.graph = graph;
-        this.predecessor = new int[V];
+        int[] predecessor = new int[V];
         this.max_flow = 0;
         this.flows = new int[V][V];
     }
 
-    public void solve(){
+    public void solve(ArrayList<Arc> arcList){
         this.max_flow = maxFlow();
         System.out.println(this);
 
-        printResid(augmentingPath());
-        printResid(this.flows);
+        printMatrix(augmentingPath());
+        this.relayFlows(arcList);
     }
 
     @Override
@@ -33,12 +33,25 @@ public class Flow {
         return "Flow " +
                 "from " + source +
                 " to " + sink +
-                " via " + Arrays.toString(predecessor) +
                 " has value of " + max_flow +
                 " .";
     }
 
+    public void relayFlows(ArrayList<Arc> arcs){
+        int[][] finalValues = this.flows;
+        int i,j;
 
+        for (i = 0; i < this.V; i++){
+            for (j = 0; j < this.V; j++){
+                for (Arc arc : arcs){
+                    if (i == arc.getOrigin() && arc.getDestination() == j){
+                        arc.setFlow(this.flows[i][j]);
+                    }
+                }
+            }
+        }
+        System.out.println("Individual Arc flows:");
+    }
 
     int[][] augmentingPath() {
 
@@ -58,9 +71,9 @@ public class Flow {
             for(v = sink; v != source; v= predecessor[v]){
                 u = predecessor[v];
                 resid[u][v] -= path_flow; //adjust forward arc
-                this.flows[u][v] -= path_flow;
+                this.flows[u][v] += path_flow;
                 resid[v][u] += path_flow; //adjust backward arc
-                this.flows[v][u] += path_flow;
+//                this.flows[v][u] += path_flow;
             }
 
             max_flow += path_flow;
@@ -143,7 +156,8 @@ public class Flow {
         return false;
     }
 
-    public void printResid(int[][] matrix){
+    public void printMatrix(int[][] matrix){
+        System.out.println("Final Graph: \n");
         for (int i = 0; i < this.V; i++) {
             int lineBreakCounter = 0;
             for (int j = 0; j < this.V; j++) {
