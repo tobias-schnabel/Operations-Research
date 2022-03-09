@@ -15,7 +15,7 @@ public class Flow {
     private final int[][] flows;
 
     public Flow(int numVert, int[][] graph) {
-        V = numVert;
+        this.V = numVert;
         this.source = 0;
         this.sink = V -1;
         this.graph = graph;
@@ -35,8 +35,8 @@ public class Flow {
     public void solveNoPrint(ArrayList<Arc> arcList){
         this.max_flow = maxFlow();
 
-        source += 1;
-        sink += 1;
+        this.source += 1;
+        this.sink += 1;
 
         System.out.println(this);
 
@@ -46,9 +46,9 @@ public class Flow {
     @Override
     public String toString() {
         return "Flow " +
-                "from " + source +
-                " to " + sink +
-                " has value of " + max_flow +
+                "from " + this.source +
+                " to " + this.sink +
+                " has value of " + this.max_flow +
                 ".";
     }
 
@@ -67,7 +67,7 @@ public class Flow {
 
     }
 
-    int[][] augmentingPath() {
+    public int[][] augmentingPath() {
 
         int u,v;
         int[][] resid = this.makeResidGraph(); //init
@@ -93,7 +93,7 @@ public class Flow {
         return this.flows;
     }
 
-    int maxFlow() {
+    public int maxFlow() {
 
         int u,v;
         int max_flow = 0;       
@@ -119,7 +119,7 @@ public class Flow {
         return max_flow;
     }
 
-    int[][] makeResidGraph(){
+    public int[][] makeResidGraph(){
         int u,v;
         int[][] residGraph = new int[V][V];
 
@@ -130,7 +130,7 @@ public class Flow {
         return residGraph;
     }
     
-    boolean isPath(int[][] residGraph, int[] predecessor) {
+    public boolean isPath(int[][] residGraph, int[] predecessor) {
         boolean[] visited = new boolean[V]; // Create a visited array (all vertices not visited so false)
 
         // Create a queue, enqueue source vertex and mark
