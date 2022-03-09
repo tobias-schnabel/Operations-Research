@@ -20,7 +20,7 @@ public class Main {
 
         try{
             arcs = readArcList(filename);
-            System.out.println("Arc list read succesfully.");
+            System.out.println("Arc list read successfully.");
             numNodes = getNumNodes(filename);
             System.out.println("The graph has "+ numNodes + " Nodes.");
             System.out.println("Original Graph:");
@@ -47,12 +47,15 @@ public class Main {
         int numNodes = -1;
 
         String[] testList = {"P5 test instances/P5_5_7.txt", "P5 test instances/P5_6_9.txt", "P5 test instances/P5_7_11.txt", "P5 test instances/P5_11_18.txt", "P5 test instances/P5_12_21.txt", "P5 test instances/P5_96_187.txt", "P5 test instances/P5_96_528.txt", "P5 test instances/P5_160_285.txt", "P5 test instances/P5_160_912.txt", "P5 test instances/P5_200_483.txt"};
+        int instanceCounter = 1;
         for (String test : testList) {
+
+            System.out.print("Test instance "+ instanceCounter + ":");
+            instanceCounter ++;
             filename = test;
             System.out.print('\n');
             try {
                 arcs = readArcList(filename);
-                System.out.println("Arc list read succesfully.");
                 numNodes = getNumNodes(filename);
                 System.out.println("The graph has " + numNodes + " Nodes.");
             } catch (FileNotFoundException e) {

@@ -49,7 +49,7 @@ public class Flow {
                 "from " + source +
                 " to " + sink +
                 " has value of " + max_flow +
-                " .";
+                ".";
     }
 
     public void relayFlows(ArrayList<Arc> arcs){
