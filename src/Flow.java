@@ -67,7 +67,7 @@ public class Flow {
 
     }
 
-    public int[][] augmentingPath() {
+     int[][] augmentingPath() {
 
         int u,v;
         int[][] resid = this.makeResidGraph(); //init
@@ -93,7 +93,7 @@ public class Flow {
         return this.flows;
     }
 
-    public int maxFlow() {
+     int maxFlow() {
 
         int u,v;
         int max_flow = 0;       
@@ -119,7 +119,7 @@ public class Flow {
         return max_flow;
     }
 
-    public int[][] makeResidGraph(){
+    int[][] makeResidGraph(){
         int u,v;
         int[][] residGraph = new int[V][V];
 
@@ -130,7 +130,7 @@ public class Flow {
         return residGraph;
     }
     
-    public boolean isPath(int[][] residGraph, int[] predecessor) {
+    boolean isPath(int[][] residGraph, int[] predecessor) {
         boolean[] visited = new boolean[V]; // Create a visited array (all vertices not visited so false)
 
         // Create a queue, enqueue source vertex and mark
