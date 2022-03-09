@@ -1,7 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-        /*Authors: Tobias Schnabel, Raoul Dohmen, Obbe Pulles*/
+    /* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
 
 public class Main {
 

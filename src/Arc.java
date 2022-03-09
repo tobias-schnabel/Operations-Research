@@ -1,3 +1,8 @@
+/* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
+
 public class Arc {
 
     private int origin;

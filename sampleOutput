@@ -1,4 +1,10 @@
-Run on Oracle OpenJDK 17.0.2
+/* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
+
+
+Built in IntelliJ IDEA Ultimate 2021.3, run on Oracle OpenJDK 17.0.2
 
 Arc list read succesfully.
 The graph has 6 Nodes.

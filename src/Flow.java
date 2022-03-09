@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
+
 public class Flow {
     private final int V; //number of Vertices
     private  int source;

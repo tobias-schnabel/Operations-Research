@@ -1,3 +1,8 @@
+/* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
+
 6 10
 0 1 16
 0 2 13

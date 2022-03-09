@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/* Authors:
+Schnabel, Tobias
+Dohmen, Raoul
+Pulles, Obbe*/
 public class Graph {
     private final int numVertices;
     private final ArrayList<Arc> arcList;
