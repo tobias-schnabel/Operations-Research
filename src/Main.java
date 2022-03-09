@@ -6,13 +6,14 @@ import java.io.*;
 public class Main {
 
     private static String filename;
-    private static int numNodes = -1;
+    private static final int numNodes = -1;
 
     public static void main(String[] args) {
         //initialize
         ArrayList<Arc> arcs = new ArrayList<>();
+        int numNodes = -1;
 
-         filename = "P5 test instances/TEST.txt";
+        filename = "P5 test instances/TEST.txt";
 
         try{
             arcs = readArcList(filename);
@@ -29,15 +30,16 @@ public class Main {
         graph.printMatrix(graph.asMatrix());
 
         Flow flow = new Flow(numNodes, graph.asMatrix());
-        flow.solveExtensive(arcs);
+        flow.solve(arcs);
         printArcList(arcs);
-
 
         test();
 
+
+
     } //close main
 
-    public static void test(){
+    public static void test() {
         ArrayList<Arc> arcs = new ArrayList<>();
         int numNodes = -1;
 
@@ -57,16 +59,9 @@ public class Main {
 
             Graph graph = new Graph(numNodes, arcs);
             Flow flow = new Flow(numNodes, graph.asMatrix());
-            flow.solve(arcs);
+            flow.solveNoPrint(arcs);
             System.out.print('\n');
 
-        }
-
-    } //close test method
-
-    public static void printArcList(ArrayList<Arc> arcList) {
-        for (Arc arc : arcList) {
-            System.out.println(arc);
         }
     }
 
@@ -78,12 +73,21 @@ public class Main {
             arc.setDestination(to - 1);
         }
     }
+
+
+    public static void printArcList(ArrayList<Arc> arcList) {
+        for (Arc arc : arcList) {
+            System.out.println(arc);
+        }
+    }
+
     public static ArrayList<Arc> readArcList(String filename)
 
         throws java.io.FileNotFoundException{
         File file = new File(filename);
         Scanner scanner = new Scanner(file);
         //get top line
+        int numNodes = scanner.nextInt();
         int numArcs = scanner.nextInt();
         //declare list
         ArrayList<Arc> arcList = new ArrayList<>();

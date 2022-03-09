@@ -3,8 +3,8 @@ import java.util.LinkedList;
 
 public class Flow {
     private final int V; //number of Vertices
-    private int source;
-    private int sink;
+    private  int source;
+    private  int sink;
     private final int[][] graph;
     private int max_flow;
     private final int[][] flows;
@@ -20,20 +20,20 @@ public class Flow {
 
     public void solve(ArrayList<Arc> arcList){
         this.max_flow = maxFlow();
+        System.out.println(this);
+
+        printMatrix(augmentingPath());
+        this.relayFlows(arcList);
+    }
+
+    public void solveNoPrint(ArrayList<Arc> arcList){
+        this.max_flow = maxFlow();
 
         source += 1;
         sink += 1;
 
         System.out.println(this);
-        this.relayFlows(arcList);
-    }
 
-    public void solveExtensive(ArrayList<Arc> arcList){
-        this.max_flow = maxFlow();
-        System.out.println("Individual Arc flows:");
-        System.out.println(this);
-
-        printMatrix(augmentingPath());
         this.relayFlows(arcList);
     }
 
@@ -45,7 +45,6 @@ public class Flow {
                 " has value of " + max_flow +
                 " .";
     }
-
 
     public void relayFlows(ArrayList<Arc> arcs){
         int i,j;
@@ -59,7 +58,7 @@ public class Flow {
                 }
             }
         }
-
+        System.out.println("Individual Arc flows:");
     }
 
     int[][] augmentingPath() {
@@ -84,7 +83,6 @@ public class Flow {
 //                this.flows[v][u] += path_flow;
             }
 
-            max_flow += path_flow;
         }
         return this.flows;
     }
