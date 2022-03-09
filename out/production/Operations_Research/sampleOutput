@@ -6,7 +6,7 @@ Pulles, Obbe*/
 
 Built in IntelliJ IDEA Ultimate 2021.3, run on Oracle OpenJDK 17.0.2
 
-Arc list read succesfully.
+Arc list read successfully.
 The graph has 6 Nodes.
 Original Graph:
 0 16 13 0 0 0
@@ -16,7 +16,7 @@ Original Graph:
 0 0 0 7 0 4
 0 0 0 0 0 0
 
-Flow from 0 to 5 has value of 23 .
+Flow from 0 to 5 has value of 23.
 Final Graph:
 0 12 11 0 0 0
 0 0 0 12 0 0
@@ -36,52 +36,42 @@ Arc from 4 to 3 with flow 7 / 7 .
 Arc from 3 to 5 with flow 19 / 20 .
 Arc from 4 to 5 with flow 4 / 4 .
 Arc from 3 to 2 with flow 0 / 9 .
-
-Arc list read succesfully.
+Test instance 1:
 The graph has 5 Nodes.
-Flow from 1 to 5 has value of 2 .
+Flow from 1 to 5 has value of 2.
 
-
-Arc list read succesfully.
+Test instance 2:
 The graph has 6 Nodes.
-Flow from 1 to 6 has value of 9 .
+Flow from 1 to 6 has value of 9.
 
-
-Arc list read succesfully.
+Test instance 3:
 The graph has 7 Nodes.
-Flow from 1 to 7 has value of 110 .
+Flow from 1 to 7 has value of 110.
 
-
-Arc list read succesfully.
+Test instance 4:
 The graph has 11 Nodes.
-Flow from 1 to 11 has value of 7 .
+Flow from 1 to 11 has value of 7.
 
-
-Arc list read succesfully.
+Test instance 5:
 The graph has 12 Nodes.
-Flow from 1 to 12 has value of 7 .
+Flow from 1 to 12 has value of 7.
 
-
-Arc list read succesfully.
+Test instance 6:
 The graph has 96 Nodes.
-Flow from 1 to 96 has value of 0 .
+Flow from 1 to 96 has value of 0.
 
-
-Arc list read succesfully.
+Test instance 7:
 The graph has 96 Nodes.
-Flow from 1 to 96 has value of 642770 .
+Flow from 1 to 96 has value of 642770.
 
-
-Arc list read succesfully.
+Test instance 8:
 The graph has 160 Nodes.
-Flow from 1 to 160 has value of 0 .
+Flow from 1 to 160 has value of 0.
 
-
-Arc list read succesfully.
+Test instance 9:
 The graph has 160 Nodes.
-Flow from 1 to 160 has value of 2771220 .
+Flow from 1 to 160 has value of 2771220.
 
-
-Arc list read succesfully.
+Test instance 10:
 The graph has 200 Nodes.
-Flow from 1 to 200 has value of 0 .
+Flow from 1 to 200 has value of 0.
