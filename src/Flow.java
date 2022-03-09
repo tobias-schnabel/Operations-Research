@@ -24,6 +24,7 @@ public class Flow {
 
         printMatrix(augmentingPath());
         this.relayFlows(arcList);
+        System.out.println("Individual Arc flows:");
     }
 
     public void solveNoPrint(ArrayList<Arc> arcList){
@@ -58,7 +59,7 @@ public class Flow {
                 }
             }
         }
-        System.out.println("Individual Arc flows:");
+
     }
 
     int[][] augmentingPath() {
